@@ -16,7 +16,7 @@
         render();
     }
 */
-    function MinutesTOHours() {
+    function MinutesToHours() {
         const [amount, setAmount] = React.useState(0);
         const [flipped, setFlipped] = React.useState(false);
         const onChange = (evnet) => {
@@ -58,7 +58,46 @@
         );
     }
     function KmToMiles() {
-        return <h3>JM 2 M</h3>;
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
+        const onChange = (evnet) => {
+            setAmount(event.target.value); 
+        }
+        const reset = () => {
+            setAmount(0);
+        }
+        const onFlip = () => {
+            reset();
+            setFlipped(!flipped);
+        }
+        return (
+            <div>
+                <div>
+                <label for="km">Km</label>
+                <input 
+                    value={flipped ? amount * 1.60934 : amount} 
+                    id="km" 
+                    placeholder="Km"
+                    type="number"
+                    onChange={onChange}
+                    disabled={flipped}
+                />
+                </div>
+                <div>
+                    <label for="hours">Miles</label>
+                    <input 
+                        value={flipped ? amount : amount * 0.621371} 
+                        id="miles" 
+                        placeholder="Miles" 
+                        type="number"
+                        onChange={onChange}
+                        disabled={!flipped}
+                    />
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>Flip</button>
+            </div>
+        );
     }
     function App() {
         const [index, setIndex] = React.useState("xx");
@@ -74,7 +113,7 @@
                     <option value="1">Km & Miles</option>
                 </select>
                 <hr />
-                {index === "0" ? <MinutesTOHours /> : null}
+                {index === "0" ? <MinutesToHours /> : null}
                 {index === "1" ? <KmToMiles /> : null}
                 {/*
                 {index === "0" ? <MinutesTOHours /> : <KmToMiles />}
