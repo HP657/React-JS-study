@@ -1,41 +1,15 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import Moive from './Movie';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './routes/Home';
+import Detail from './routes/Detail';
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-
-  const getMovies = async () => {
-    const url =
-      'https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year';
-    const res = await axios.get(url);
-    setMovies(res.data.data.movies);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getMovies();
-  }, []);
-
   return (
-    <>
-      {loading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div>
-          {movies.map((movie) => (
-            <Moive
-              key={movie.id}
-              coverImg={movie.medium_cover_image}
-              title={movie.title}
-              summary={movie.summary}
-              genres={movie.genres}
-            />
-          ))}
-        </div>
-      )}
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="movie" element={<Detail />} />
+      </Routes>
+    </Router>
   );
 }
 
